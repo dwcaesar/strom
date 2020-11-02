@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+    <title>Stromrechnung</title>
+    <style>
+        html, body {
+            font-size: 10pt;
+        }
+
+        h1 {
+            font-size: medium;
+        }
+
+        #zusatz {
+            position: absolute;
+            left: 25mm;
+            top: 45mm;
+            width: 80mm;
+            height: 17.7mm;
+            font-size: smaller;
+        }
+
+        #anschrift {
+            position: absolute;
+            left: 25mm;
+            top: 62.7mm;
+            width: 80mm;
+            height: 27.3mm;
+        }
+
+        #info {
+            position: absolute;
+            left: 125mm;
+            top: 50mm;
+            width: 75mm;
+            height: 40mm;
+            display: table;
+        }
+
+        #text {
+            position: absolute;
+            left: 25mm;
+            top: 101mm;
+            width: 165mm;
+        }
+
+        .table_row {
+            display: table-row;
+        }
+
+        .table_cell {
+            display: table-cell;
+        }
+
+        .label {
+            font-size: smaller;
+        }
+    </style>
+</head>
+<body> <!-- TODO - Logo in die Ecke oben rechts einfügen -->
+<div id="zusatz"> <!-- TODO - Schriftgröße zu klein -->
+    &nbsp;<br>
+    &nbsp;<br>
+    &nbsp;<br>
+    Mustermann GmbH, Hauptstraße 125, 12345 Beispiel
+</div>
+<div id="anschrift">
+    Firma<br>
+    Ansprechpartner<br/>
+    Straße und Hausnummer<br/>
+    Postleitzahl und Ort<br/>
+    &nbsp;<br/>
+    &nbsp;
+</div>
+<div id="info"> <!-- TODO - Vertikalen Abstand zwischen Tabellenzeilen verringern -->
+    <div class="table_row">
+        <div class="table_cell label">Ansprechpartner</div>
+        <div class="table_cell">Hans Mustermann</div>
+    </div>
+    <div class="table_row">
+        <div class="table_cell label">Telefon</div>
+        <div class="table_cell">012345 6789-15</div>
+    </div>
+    <div class="table_row">
+        <div class="table_cell label">Fax</div>
+        <div class="table_cell">012345 6789-10</div>
+    </div>
+    <div class="table_row">
+        <div class="table_cell label">E-Mail</div>
+        <div class="table_cell">hans@mustermann.de</div>
+    </div>
+    <div class="table_row">
+        <div class="table_cell label">Unser Zeichen</div>
+        <div class="table_cell">HM-2020-5448</div>
+    </div>
+    <div class="table_row">
+        <div class="table_cell label">Datum</div>
+        <div class="table_cell">1. Januar 2020</div>
+    </div>
+</div>
+<div id="text"> <!-- TODO - Textkörper zu weit oben -->
+    <h1>Seminare für Sekretärinnen und Assistentinnen</h1>
+    <p>Sehr geehrte Frau Muster,</p>
+    <p>Weiterbildung ist der Schlüssel zu Ihrer Karriere. Unser Auftritt seminare-fuer-sekretaerinnen.de bietet Ihnen als Sekretärin oder Assistentin einen guten Überblick über Seminarangebote verschiedenerAnbieter.</p>
+    <p>Hier finden Sie Eintagesseminare, zweitägige Intensiv-Seminare sowie exklusive Konferenzen in vielen Städten über ganz Deutschland verteilt –und das schon ab 350 €. Zu jedem Seminar können Sie sich direkt über diese hilfreiche Seite
+        anmelden. Nehmen Sie Ihre Zukunft jetzt in die Hand!</p>
+    <p>Und wenn Sie Fragen oder Wünsche haben, dann rufen Sie mich an. Ich berate Sie gerne: Telefon 0123456789-0 oder Sie schicken eine E-Mail an hans-mustermeier@musterseite.de.</p>
+    <p>Freundliche Grüße<br/>
+        aus Beispiel
+    </p>
+    <p>
+        Mustermann GmbH
+    </p>
+    <img src="" id="signum" alt=""> <!-- TODO - Platzhaltergrafik einfügen -->
+    <p>
+        Hans Mustermann<br/>
+        Projektleiter
+    </p>
+</div>
+<div id="footer"> <!-- TODO - Footer erstellen -->
+
+</div>
+</body>
+</html>
