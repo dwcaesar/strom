@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Stromrechnung</title>
+    <style>
+        html, body {
+            font-size: 10pt;
+        }
+
+        h1, h2 {
+            font-size: 10pt;
+        }
+
+        #zusatz {
+            position: absolute;
+            left: 25mm;
+            top: 45mm;
+            width: 80mm;
+            height: 17.7mm;
+            font-size: 8pt;
+            white-space: nowrap;
+        }
+
+        #anschrift {
+            position: absolute;
+            left: 25mm;
+            top: 62.7mm;
+            width: 80mm;
+            height: 27.3mm;
+        }
+
+        #info {
+            position: absolute;
+            left: 125mm;
+            top: 50mm;
+            width: 75mm;
+            height: 40mm;
+            display: table;
+        }
+
+        #text {
+            position: absolute;
+            left: 25mm;
+            top: 101mm;
+            width: 165mm;
+        }
+
+        #footer {
+            position: absolute;
+            left: 25mm;
+            top: 262mm;
+            height: 34mm;
+            width: 165mm;
+        }
+
+        #logo_top {
+            position: absolute;
+            top: 10mm;
+            left: 170mm;
+        }
+
+        .table_row {
+            display: table-row;
+        }
+
+        .table_cell {
+            display: table-cell;
+        }
+
+        .label {
+            font-size: 8pt;
+        }
+    </style>
+</head>
+<body>
+<img id="logo_top" src="logo_strom.png" alt="Logo">
+<div id="zusatz">
+    &nbsp;<br>
+    &nbsp;<br>
+    &nbsp;<br>
+    $sender.name, $sender.street $sender.nr, $sender.zip $sender.city
+</div>
+<div id="anschrift">
+    $receiver.title<br>
+    $receiver.name<br/>
+    $receiver.street $receiver.nr<br/>
+    $receiver.zip $receiver.city<br/>
+    &nbsp;<br/>
+    &nbsp;
+</div>
+<div id="info">
+    <div class="table_row">
+        <div class="table_cell label">Ansprechpartner</div>
+        <div class="table_cell">$contact.name</div>
+    </div>
+    <div class="table_row">
+        <div class="table_cell label">Telefon</div>
+        <div class="table_cell">$contact.phone</div>
+    </div>
+    <div class="table_row">
+        <div class="table_cell label">E-Mail</div>
+        <div class="table_cell">$contact.mail</div>
+    </div>
+    <div class="table_row">
+        <div class="table_cell label">Platznummer</div>
+        <div class="table_cell">$placeId</div>
+    </div>
+    <div class="table_row">
+        <div class="table_cell label">Datum</div>
+        <div class="table_cell">$billingDate</div>
+    </div>
+</div>
+<div id="text">
+    <h1>Stromrechnung für $placeId vom $startDate bis $endDate</h1>
+    <h2>Stromverbrauch</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Zeitraum</th>
+            <th colspan="2">Zählerstand</th>
+            <th>Grundlage</th>
+            <th>Verbrauch</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>Alt</th>
+            <th>Neu</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>$startDate &mdash; $endDate</td>
+            <td>$oldReading</td>
+            <td>$newReading</td>
+            <td>
+                #if($isRead)
+                Ablesung
+                #else
+                Schätzung
+                #end
+            </td>
+            <td>$consumption kWh</td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>Berechnung</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Zeitraum</th>
+            <th></th>
+            <th>Preis</th>
+            <th>Betrag</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>$startDate &mdash; $endDate</td>
+            <td>Verbrauch</td>
+            <td>$powerRate €/kWh</td>
+            <td>$powerCost €</td>
+        </tr>
+        <tr>
+            <td>$startDate &mdash; $endDate</td>
+            <td>Grundgebühr</td>
+            <td>$basicFeeRate €/Monat</td>
+            <td>$basicFee €</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Anschlussgebühr</td>
+            <td></td>
+            <td>$connectFee €</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Alte Abschlagszahlung</td>
+            <td>$oldAdvance €</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Neue Abschlagszahlung</td>
+            <td>$currentAdvance €</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Ensdumme</td>
+            <td>$grandTotal €</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <p>
+        #if($directDebit)
+        #if($grandTotal > 0)
+        Diesen Betrag werden wir in den nächsten Tagen von Ihrem Konto abbuchen.
+        #else
+        Diesen Betrag werden wir in den nächsten Tagen auf Ihrem Konto gutschreiben.
+        #end
+        #else
+        #if($grandTotal > 0)
+        Bitte begleichen Sie den Betrag bis zum $dueDate.
+        #else
+        Bitte sprechen Sie $treasurer bezüglich einer Erstattung an.
+        #end
+        #end
+    </p>
+    <p>
+        Mit freundlichen Grüßen<br/>
+        Ihre <strong><em>STROM - AG</em></strong>
+    </p>
+    <p>
+        $contact.name
+    </p>
+</div>
+<div id="footer">
+    #* TODO - Footer erstellen *#
+</div>
+</body>
+</html>
