@@ -12,6 +12,22 @@
             font-size: 10pt;
         }
 
+        table, thead, tbody, tr, td, th {
+            border-collapse: collapse;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        td, thead {
+            border-bottom: 1px solid black;
+        }
+
+        thead {
+            background: lightgray;
+        }
+
         #zusatz {
             position: absolute;
             left: 25mm;
@@ -46,14 +62,6 @@
             width: 165mm;
         }
 
-        #footer {
-            position: absolute;
-            left: 25mm;
-            top: 262mm;
-            height: 34mm;
-            width: 165mm;
-        }
-
         #logo_top {
             position: absolute;
             top: 10mm;
@@ -70,6 +78,10 @@
 
         .label {
             font-size: 8pt;
+        }
+
+        .total_row {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -187,11 +199,11 @@
             <td>$currentAdvance €</td>
             <td></td>
         </tr>
-        <tr>
+        <tr class="total_row">
             <td></td>
             <td>Ensdumme</td>
-            <td>$grandTotal €</td>
             <td></td>
+            <td>$grandTotal €</td>
         </tr>
         </tbody>
     </table>
@@ -217,9 +229,6 @@
     <p>
         $contact.name
     </p>
-</div>
-<div id="footer">
-    #* TODO - Footer erstellen *#
 </div>
 </body>
 </html>

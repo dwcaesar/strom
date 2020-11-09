@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Stromabrechnung</title>
+    <style>
+        html, body {
+            font-size: 10pt;
+        }
+
+        h1 {
+            font-size: 10pt;
+        }
+
+        table, thead, tbody, tr, td, th {
+            border-collapse: collapse;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        td, thead {
+            border-bottom: 1px solid black;
+        }
+
+        thead {
+            background: lightgray;
+        }
+
+        #text {
+            position: absolute;
+            left: 25mm;
+            top: 25mm;
+            width: 165mm;
+            height: 237mm;
+        }
+
+        .total_row {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div id="text">
+    <h1>Stromabrechnung $startDate bis $endDate</h1>
+    <table>
+        <thead>
+        <tr>
+            <th colspan="3"></th>
+            <th colspan="2">Abschläge</th>
+            <th>Anschl.</th>
+            <th>BE</th>
+            <th>RE</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Verbrauch</th>
+            <th>alt</th>
+            <th>neu</th>
+            <th>Geb.</th>
+            <th>Ges.</th>
+            <th>Ges.</th>
+        </tr>
+        </thead>
+        <tbody>
+        #foreach($place in $places) #* TODO - Prüfen, wie lange Tabellen über mehrere Seiten umgebrochen werden: thead muss immer wiederholt werden *#
+        <tr>
+            <td>$place.Id</td>
+            <td>$place.name</td>
+            <td>$place.consumption kWh</td>
+            <td>$place.oldBasicFee €</td>
+            <td>$place.newBasicFee €</td>
+            <td>$place.connectFee €</td>
+            <td>$place.directDebit €</td>
+            <td>$place.invoice €</td>
+        </tr>
+        #end
+        <tr class="total_row">
+            <td></td>
+            <td>Endsummen</td>
+            <td>$total.consumption kWh</td>
+            <td>$total.oldBasicFee €</td>
+            <td>$total.newBasicFee €</td>
+            <td>$total.connectFee €</td>
+            <td>$total.directDebit €</td>
+            <td>$total.invoice €</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
