@@ -29,43 +29,43 @@
         }
 
         #zusatz {
-            position: absolute;
-            left: 25mm;
-            top: 45mm;
-            width: 80mm;
-            height: 17.7mm;
-            font-size: 8pt;
+            position:    absolute;
+            left:        25mm;
+            top:         45mm;
+            width:       80mm;
+            height:      17.7mm;
+            font-size:   8pt;
             white-space: nowrap;
         }
 
         #anschrift {
             position: absolute;
-            left: 25mm;
-            top: 62.7mm;
-            width: 80mm;
-            height: 27.3mm;
+            left:     25mm;
+            top:      62.7mm;
+            width:    80mm;
+            height:   27.3mm;
         }
 
         #info {
             position: absolute;
-            left: 125mm;
-            top: 50mm;
-            width: 75mm;
-            height: 40mm;
-            display: table;
+            left:     125mm;
+            top:      50mm;
+            width:    75mm;
+            height:   40mm;
+            display:  table;
         }
 
         #text {
             position: absolute;
-            left: 25mm;
-            top: 101mm;
-            width: 165mm;
+            left:     25mm;
+            top:      101mm;
+            width:    165mm;
         }
 
         #logo_top {
             position: absolute;
-            top: 10mm;
-            left: 170mm;
+            top:      10mm;
+            left:     170mm;
         }
 
         .table_row {
@@ -143,19 +143,21 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>$startDate &mdash; $endDate</td>
-            <td>$oldReading</td>
-            <td>$newReading</td>
-            <td>
-                #if($isRead)
-                Ablesung
-                #else
-                Schätzung
-                #end
-            </td>
-            <td>$consumption kWh</td>
-        </tr>
+            #foreach($reading in $readings)
+            <tr>
+                <td>$reading.startDate &mdash; $reading.endDate</td>
+                <td>$reading.startReading</td>
+                <td>$reading.endReading</td>
+                <td>
+                    #if($reading.isEstimated)
+                        Schätzung
+                    #else
+                        Ablesung
+                    #end
+                </td>
+                <td>$reading.consumption kWh</td>
+            </tr>
+            #end
         </tbody>
     </table>
     <h2>Berechnung</h2>
@@ -209,17 +211,17 @@
     </table>
     <p>
         #if($directDebit)
-        #if($grandTotal > 0)
-        Diesen Betrag werden wir in den nächsten Tagen von Ihrem Konto abbuchen.
+            #if($grandTotal > 0)
+                Diesen Betrag werden wir in den nächsten Tagen von Ihrem Konto abbuchen.
+            #else
+                Diesen Betrag werden wir in den nächsten Tagen auf Ihrem Konto gutschreiben.
+            #end
         #else
-        Diesen Betrag werden wir in den nächsten Tagen auf Ihrem Konto gutschreiben.
-        #end
-        #else
-        #if($grandTotal > 0)
-        Bitte begleichen Sie den Betrag bis zum $dueDate.
-        #else
-        Bitte sprechen Sie $treasurer bezüglich einer Erstattung an.
-        #end
+            #if($grandTotal > 0)
+                Bitte begleichen Sie den Betrag bis zum $dueDate.
+            #else
+                Bitte sprechen Sie $treasurer bezüglich einer Erstattung an.
+            #end
         #end
     </p>
     <p>
