@@ -23,7 +23,7 @@
     <dependencies>
         <!-- Logging -->
         <dependency>
-            <groupId>org.slf4j</groupId>
+            <groupId>org.slf4j</groupId> <!-- FIXME log4j ist nicht mit Java 11 kompatibel: https://stackoverflow.com/a/60133213 -->
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.30</version>
         </dependency>
