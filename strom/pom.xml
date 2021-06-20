@@ -23,8 +23,13 @@
     <dependencies>
         <!-- Logging -->
         <dependency>
-            <groupId>org.slf4j</groupId> <!-- FIXME log4j ist nicht mit Java 11 kompatibel: https://stackoverflow.com/a/60133213 -->
-            <artifactId>slf4j-log4j12</artifactId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
             <version>1.7.30</version>
         </dependency>
         <!-- Benutzeroberfläche -->
@@ -37,6 +42,24 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>11.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11.0.2</version>
+            <classifier>win</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11.0.2</version>
+            <classifier>linux</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11.0.2</version>
+            <classifier>mac</classifier>
         </dependency>
         <!-- Template-Engine für Datenexporte und PDF-Dateien -->
         <dependency>
@@ -71,16 +94,18 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.1</version>
                 <configuration>
                     <source>11</source>
                     <target>11</target>
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.1</version>
+                <version>3.3.0</version>
                 <configuration>
                     <archive>
                         <manifest>

@@ -19,7 +19,7 @@ public class Lang {
 
     public static String get(String key, String... variables) {
         if (selectedBundle == null) {
-            selectedBundle = ResourceBundle.getBundle("resources/lang", getLang());
+            selectedBundle = ResourceBundle.getBundle("lang", getLang());
         }
         try {
             String val = selectedBundle.getString(key);
