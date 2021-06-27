@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="de.wohlers.strom.MainWindow" prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.wohlers.strom.MainWindow">
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button mnemonicParsing="false" onAction="#showHome" text="%Window.Button.Home" />
+            <Button mnemonicParsing="false" onAction="#showSettings" text="%Window.Button.Settings" />
+        </items>
+      </ToolBar>
+   </top>
+   <center>
+      <AnchorPane fx:id="content" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
