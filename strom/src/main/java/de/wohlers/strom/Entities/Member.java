@@ -9,16 +9,16 @@ import java.util.List;
 @Access (AccessType.FIELD)
 public class Member extends Entity {
     @Id
-    private int     id;
-    private String  title;
-    private String  name;
-    private String  street;
-    private String  zip;
-    private String  city;
-    private String  phone;
-    private String  email;
-    private String  ePost;
-    private boolean directDebit;
+    private int                id;
+    private String             title;
+    private String             name;
+    private String             street;
+    private String             zip;
+    private String             city;
+    private String             phone;
+    private String             email;
+    private String             ePost;
+    private boolean            directDebit;
     private NotificationMethod preferredNotificationMethod;
 
     public static List<Member> findAll() {

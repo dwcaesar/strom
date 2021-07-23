@@ -2,8 +2,6 @@ package de.wohlers.strom;
 
 import de.wohlers.strom.Lang.Lang;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -21,8 +19,8 @@ public class MainWindow extends Application implements Initializable {
 
     static final Logger LOGGER = LoggerFactory.getLogger(MainWindow.class);
 
-    private static Stage stage;
-    public AnchorPane content;
+    private static Stage      stage;
+    public         AnchorPane content;
 
     public static void main(String[] args) {
         launch(args);
@@ -43,19 +41,30 @@ public class MainWindow extends Application implements Initializable {
     }
 
     public void showHome() {
-        try {
-            content.getChildren().setAll((Node) new FXMLLoader(MainWindow.class.getResource("Views/Home.fxml"), Lang.getBundle()).load());
-        } catch (RuntimeException | IOException exception) {
-            LOGGER.error("Konnte Scene nicht laden", exception);
-        }
+        show("Views/Home.fxml");
     }
 
     public void showSettings() {
+        show("Views/Settings.fxml");
+    }
+
+    private void show(String resourceName) {
         try {
-            content.getChildren().setAll((Node) new FXMLLoader(MainWindow.class.getResource("Views/Settings.fxml"), Lang.getBundle()).load());
+            Node child = new FXMLLoader(MainWindow.class.getResource(resourceName), Lang.getBundle()).load();
+
+            content.getChildren().setAll(child);
+
+            AnchorPane.setTopAnchor(child, 0.);
+            AnchorPane.setLeftAnchor(child, 0.);
+            AnchorPane.setBottomAnchor(child, 0.);
+            AnchorPane.setRightAnchor(child, 0.);
         } catch (RuntimeException | IOException e) {
             LOGGER.error("Konnte Scene nicht laden", e);
         }
+    }
+
+    public void showMembers() {
+        show("Views/Members.fxml");
     }
 
     @Override

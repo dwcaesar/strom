@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<SplitPane xmlns:fx="http://javafx.com/fxml/1" dividerPositions="0.0" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="de.wohlers.strom.Views.Members">
+    <items>
+        <ToolBar orientation="VERTICAL">
+            <items>
+                <Button mnemonicParsing="false" onAction="#showNewMemberDialog" text="%Generic.Button.New"/>
+                <Button fx:id="editButton" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#showEditMemberDialog" text="%Generic.Button.Edit"/>
+                <Separator/>
+                <Button fx:id="deleteButton" disable="true" layoutX="10.0" layoutY="40.0" mnemonicParsing="false" onAction="#showDeleteMemberDialog" text="%Generic.Button.Delete"/>
+            </items>
+        </ToolBar>
+        <TableView fx:id="memberTable">
+            <columns>
+                <TableColumn fx:id="nameColumn" prefWidth="75.0" text="%Member.Name"/>
+            </columns>
+        </TableView>
+    </items>
+</SplitPane>
