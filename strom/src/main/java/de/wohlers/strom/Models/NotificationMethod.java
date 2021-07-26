@@ -1,4 +1,4 @@
-package de.wohlers.strom.Entities;
+package de.wohlers.strom.Models;
 
 public enum NotificationMethod {
     EMAIL,

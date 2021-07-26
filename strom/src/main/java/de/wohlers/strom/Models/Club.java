@@ -1,10 +1,10 @@
-package de.wohlers.strom.Entities;
+package de.wohlers.strom.Models;
 
 import javax.persistence.*;
 
-@javax.persistence.Entity
+@Entity
 @Access (AccessType.FIELD)
-public class Club extends Entity {
+public class Club {
     @Id
     private int    id;
     private String name;

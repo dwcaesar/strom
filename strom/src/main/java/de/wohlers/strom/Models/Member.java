@@ -1,21 +1,36 @@
 package de.wohlers.strom.Models;
 
-import de.wohlers.strom.Entities.NotificationMethod;
 import javafx.beans.property.*;
 
+import javax.persistence.*;
+
+@Entity
+@Access (AccessType.FIELD)
 public class Member {
 
-    private final IntegerProperty                    id;
-    private final StringProperty                     title;
-    private final StringProperty                     name;
-    private final StringProperty                     street;
-    private final StringProperty                     zip;
-    private final StringProperty                     city;
-    private final StringProperty                     phone;
-    private final StringProperty                     email;
-    private final StringProperty                     epost;
-    private final BooleanProperty                    directDebit;
-    private final ObjectProperty<NotificationMethod> preferredNotificationMethod;
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private       Long                               id;
+    @Transient
+    private final StringProperty                     title                       = new SimpleStringProperty();
+    @Transient
+    private final StringProperty                     name                        = new SimpleStringProperty();
+    @Transient
+    private final StringProperty                     street                      = new SimpleStringProperty();
+    @Transient
+    private final StringProperty                     zip                         = new SimpleStringProperty();
+    @Transient
+    private final StringProperty                     city                        = new SimpleStringProperty();
+    @Transient
+    private final StringProperty                     phone                       = new SimpleStringProperty();
+    @Transient
+    private final StringProperty                     email                       = new SimpleStringProperty();
+    @Transient
+    private final StringProperty                     epost                       = new SimpleStringProperty();
+    @Transient
+    private final BooleanProperty                    directDebit                 = new SimpleBooleanProperty();
+    @Transient
+    private final ObjectProperty<NotificationMethod> preferredNotificationMethod = new SimpleObjectProperty<>();
 
     /*
     TODO
@@ -24,37 +39,15 @@ public class Member {
 
      */
 
-    public Member() { /* TODO - Die ViewModel-Instanzen sollen aus den Entities generiert werden */
-        this(null);
-    }
-
-    public Member(String name) {
-
-        id = new SimpleIntegerProperty();
-        title = new SimpleStringProperty();
-        this.name = new SimpleStringProperty(name);
-        street = new SimpleStringProperty();
-        zip = new SimpleStringProperty();
-        city = new SimpleStringProperty();
-        phone = new SimpleStringProperty();
-        email = new SimpleStringProperty();
-        epost = new SimpleStringProperty();
-        directDebit = new SimpleBooleanProperty();
-        preferredNotificationMethod = new SimpleObjectProperty<>();
-    }
-
-    public int getId() {
-        return id.get();
-    }
-
-    public void setId(int id) {
-        this.id.set(id);
-    }
-
-    public IntegerProperty idProperty() {
+    public Long getId() {
         return id;
     }
 
+    public void setId(final Long id) {
+        this.id = id;
+    }
+
+    @Access (AccessType.PROPERTY)
     public String getTitle() {
         return title.get();
     }
@@ -67,6 +60,7 @@ public class Member {
         return title;
     }
 
+    @Access (AccessType.PROPERTY)
     public String getName() {
         return name.get();
     }
@@ -79,6 +73,7 @@ public class Member {
         return name;
     }
 
+    @Access (AccessType.PROPERTY)
     public String getStreet() {
         return street.get();
     }
@@ -91,6 +86,7 @@ public class Member {
         return street;
     }
 
+    @Access (AccessType.PROPERTY)
     public String getZip() {
         return zip.get();
     }
@@ -103,6 +99,7 @@ public class Member {
         return zip;
     }
 
+    @Access (AccessType.PROPERTY)
     public String getCity() {
         return city.get();
     }
@@ -115,6 +112,7 @@ public class Member {
         return city;
     }
 
+    @Access (AccessType.PROPERTY)
     public String getPhone() {
         return phone.get();
     }
@@ -127,6 +125,7 @@ public class Member {
         return phone;
     }
 
+    @Access (AccessType.PROPERTY)
     public String getEmail() {
         return email.get();
     }
@@ -139,6 +138,7 @@ public class Member {
         return email;
     }
 
+    @Access (AccessType.PROPERTY)
     public String getEpost() {
         return epost.get();
     }
@@ -151,6 +151,7 @@ public class Member {
         return epost;
     }
 
+    @Access (AccessType.PROPERTY)
     public boolean isDirectDebit() {
         return directDebit.get();
     }
@@ -163,6 +164,7 @@ public class Member {
         return directDebit;
     }
 
+    @Access (AccessType.PROPERTY)
     public NotificationMethod getPreferredNotificationMethod() {
         return preferredNotificationMethod.get();
     }

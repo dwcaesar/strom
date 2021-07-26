@@ -1,14 +1,16 @@
 package de.wohlers.strom.Views;
 
+import de.wohlers.strom.DAO.MemberDAO;
 import de.wohlers.strom.Lang.Lang;
 import de.wohlers.strom.Models.Member;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Members implements Initializable {
@@ -18,14 +20,16 @@ public class Members implements Initializable {
     public TableView<Member>           memberTable;
     public TableColumn<Member, String> nameColumn;
 
+    private final MemberDAO memberDAO = MemberDAO.getInstance();
+
     public void showNewMemberDialog() {
-        // TODO - EditMemberDialog anzeigen, mit einem leeren Mitglied
-        ObservableList<Member> items = FXCollections.observableArrayList(new Member("Test"));
-        memberTable.setItems(items);
+        Member member = new Member();
+        EditMemberDialog.open(member, this::addMember);
     }
 
     public void showEditMemberDialog() {
-        // TODO - EditMemberDialog anzeigen, mit Ausgewählten Mitglied
+        Member member = memberTable.getSelectionModel().getSelectedItem();
+        EditMemberDialog.open(member, this::updateMember);
     }
 
     public void showDeleteMemberDialog() {
@@ -44,6 +48,26 @@ public class Members implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         memberTable.getSelectionModel().getSelectedItems().addListener(this::onSelectionChange);
         nameColumn.setCellValueFactory(data -> data.getValue().nameProperty());
+        loadDataAsync();
+    }
+
+    private void loadDataAsync() {
+        final Service<List<Member>> service = new Service<>() {
+            @Override
+            protected Task<List<Member>> createTask() {
+                return new Task<>() {
+                    @Override
+                    protected List<Member> call() {
+                        return memberDAO.findAll();
+                    }
+                };
+            }
+        };
+        service.setOnSucceeded(e -> {
+            memberTable.getItems().setAll(service.getValue());
+            memberTable.getItems().addListener(this::persistChange);
+        });
+        service.start();
     }
 
     private void onSelectionChange(ListChangeListener.Change<? extends Member> change) {
@@ -56,11 +80,30 @@ public class Members implements Initializable {
         }
     }
 
+    private void addMember(Member member) {
+        memberTable.getItems().add(member);
+    }
+
+    private void updateMember(Member member) {
+        memberDAO.merge(member);
+        // TODO - Muss ich ein Event feuern, damit die Tabelle aktualisiert wird?
+    }
+
     private ButtonType onDeleteSelected(ButtonType b) {
         if (b.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-            // TODO - Löschung auch ausführen, vielleicht als Observer auf memberTable.getItems()
             memberTable.getItems().removeAll(memberTable.getSelectionModel().getSelectedItems());
         }
         return b;
+    }
+
+    private void persistChange(ListChangeListener.Change<? extends Member> m) {
+        while (m.next()) {
+            if (m.wasAdded()) {
+                m.getAddedSubList().forEach(memberDAO::persist);
+            }
+            if (m.wasRemoved()) {
+                m.getRemoved().forEach(memberDAO::remove);
+            }
+        }
     }
 }

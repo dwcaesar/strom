@@ -1,12 +1,16 @@
 package de.wohlers.strom.Entities;
 
+import de.wohlers.strom.DAO.DAO;
+import de.wohlers.strom.Models.Contract;
+import de.wohlers.strom.Models.NotificationMethod;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @javax.persistence.Entity
 @Access (AccessType.FIELD)
-public class Bill extends Entity {
+public class Bill extends DAO {
     @Id
     private int                id;
     @ManyToOne (fetch = FetchType.LAZY)

@@ -1,12 +1,14 @@
 package de.wohlers.strom.Entities;
 
+import de.wohlers.strom.DAO.DAO;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @javax.persistence.Entity
 @Access (AccessType.FIELD)
-public class Period extends Entity {
+public class Period extends DAO {
     @Id
     private int        id;
     private String     name;

@@ -1,12 +1,15 @@
-package de.wohlers.strom.Entities;
+package de.wohlers.strom.Models;
+
+import de.wohlers.strom.Entities.Bill;
+import de.wohlers.strom.Entities.Place;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@javax.persistence.Entity
+@Entity
 @Access (AccessType.FIELD)
-public class Contract extends Entity {
+public class Contract {
     @Id
     private int        id;
     @ManyToOne (fetch = FetchType.LAZY)

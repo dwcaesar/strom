@@ -1,10 +1,10 @@
-package de.wohlers.strom.Entities;
+package de.wohlers.strom.DAO;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public abstract class Entity {
+public abstract class DAO<T> {
 
     private static EntityManagerFactory emf;
     private static EntityManager        em;
@@ -22,6 +22,27 @@ public abstract class Entity {
             emf = Persistence.createEntityManagerFactory("objectdb:$objectdb/db/strom.odb");
         }
         return emf;
+    }
+
+    public void persist(T member) {
+        EntityManager em = getManager();
+        em.getTransaction().begin();
+        em.persist(member);
+        em.getTransaction().commit();
+    }
+
+    public void remove(T member) {
+        EntityManager em = getManager();
+        em.getTransaction().begin();
+        em.remove(member);
+        em.getTransaction().commit();
+    }
+
+    public void merge(T member) {
+        EntityManager em = getManager();
+        em.getTransaction().begin();
+        em.merge(member);
+        em.getTransaction().commit();
     }
 
 }
