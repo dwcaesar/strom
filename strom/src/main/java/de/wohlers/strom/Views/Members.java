@@ -7,7 +7,9 @@ import javafx.collections.ListChangeListener;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 import java.net.URL;
 import java.util.List;
@@ -33,15 +35,7 @@ public class Members implements Initializable {
     }
 
     public void showDeleteMemberDialog() {
-        ButtonType buttonDelete = new ButtonType(Lang.get("Generic.Button.Delete"), ButtonBar.ButtonData.OK_DONE);
-        ButtonType buttonCancel = new ButtonType(Lang.get("Generic.Button.Cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, Lang.get("Dialog.Content.Member.Delete"), buttonCancel, buttonDelete);
-        alert.setTitle(Lang.get("Dialog.Title.Delete"));
-        alert.setHeaderText(Lang.get("Dialog.Header.Member.Delete"));
-        alert.setResizable(true);
-        alert.setResultConverter(this::onDeleteSelected);
-        alert.show();
+        DeleteDialog.open(memberTable.getSelectionModel().getSelectedItem(), this::deleteMember, Lang.get("Dialog.Title.Delete"));
     }
 
     @Override
@@ -89,11 +83,8 @@ public class Members implements Initializable {
         // TODO - Muss ich ein Event feuern, damit die Tabelle aktualisiert wird?
     }
 
-    private ButtonType onDeleteSelected(ButtonType b) {
-        if (b.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-            memberTable.getItems().removeAll(memberTable.getSelectionModel().getSelectedItems());
-        }
-        return b;
+    private void deleteMember(Member member) {
+        memberTable.getItems().remove(member);
     }
 
     private void persistChange(ListChangeListener.Change<? extends Member> m) {

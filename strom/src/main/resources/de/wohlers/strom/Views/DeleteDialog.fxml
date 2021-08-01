@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.wohlers.strom.Views.DeleteDialog">
+   <bottom>
+      <HBox alignment="TOP_RIGHT" spacing="5.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+         <Button mnemonicParsing="false" onAction="#onDelete" text="%Generic.Button.Delete">
+            <graphic>
+               <FontAwesomeIconView glyphName="TRASH" />
+            </graphic>
+         </Button>
+         <Separator orientation="VERTICAL">
+            <HBox.margin>
+               <Insets left="4.0" />
+            </HBox.margin>
+         </Separator>
+         <Button cancelButton="true" mnemonicParsing="false" onAction="#onCancel" text="%Generic.Button.Cancel">
+            <graphic>
+               <FontAwesomeIconView glyphName="CLOSE" />
+            </graphic>
+         </Button>
+      </HBox>
+   </bottom>
+   <center>
+      <Text fx:id="message" strokeType="OUTSIDE" strokeWidth="0.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
