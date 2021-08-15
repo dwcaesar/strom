@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.*?>
-
 <SplitPane dividerPositions="0.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.wohlers.strom.Views.Members">
-    <items>
-        <ToolBar orientation="VERTICAL">
-            <items>
-                <Button mnemonicParsing="false" onAction="#showNewMemberDialog" text="%Generic.Button.New">
-               <graphic>
-                  <FontAwesomeIconView glyphName="PLUS" />
-               </graphic></Button>
-                <Button fx:id="editButton" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#showEditMemberDialog" text="%Generic.Button.Edit">
-               <graphic>
-                  <FontAwesomeIconView glyphName="PENCIL" />
-               </graphic></Button>
-                <Separator />
-                <Button fx:id="deleteButton" disable="true" layoutX="10.0" layoutY="40.0" mnemonicParsing="false" onAction="#showDeleteMemberDialog" text="%Generic.Button.Delete">
-               <graphic>
-                  <FontAwesomeIconView glyphName="TRASH" />
-               </graphic></Button>
-            </items>
-        </ToolBar>
-        <TableView fx:id="memberTable">
-            <columns>
-                <TableColumn fx:id="nameColumn" prefWidth="75.0" text="%Member.Name" />
-            </columns>
-        </TableView>
-    </items>
+    <ToolBar orientation="VERTICAL">
+        <Button mnemonicParsing="false" onAction="#showNewMemberDialog" text="%Generic.Button.New">
+            <graphic>
+                <FontAwesomeIconView glyphName="PLUS"/>
+            </graphic>
+        </Button>
+        <Button fx:id="editButton" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#showEditMemberDialog" text="%Generic.Button.Edit">
+            <graphic>
+                <FontAwesomeIconView glyphName="PENCIL"/>
+            </graphic>
+        </Button>
+        <Separator/>
+        <Button fx:id="deleteButton" disable="true" layoutX="10.0" layoutY="40.0" mnemonicParsing="false" onAction="#showDeleteMemberDialog" text="%Generic.Button.Delete">
+            <graphic>
+                <FontAwesomeIconView glyphName="TRASH"/>
+            </graphic>
+        </Button>
+    </ToolBar>
+    <TableView fx:id="memberTable">
+        <placeholder>
+            <Label text="%Member.EmptyList"/>
+        </placeholder>
+        <columns>
+            <TableColumn fx:id="nameColumn" prefWidth="75.0" text="%Member.Name"/>
+        </columns>
+    </TableView>
 </SplitPane>

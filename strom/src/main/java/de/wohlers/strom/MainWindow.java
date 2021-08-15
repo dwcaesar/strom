@@ -2,12 +2,13 @@ package de.wohlers.strom;
 
 import de.wohlers.strom.Lang.Lang;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,10 +21,15 @@ public class MainWindow extends Application implements Initializable {
     static final Logger LOGGER = LoggerFactory.getLogger(MainWindow.class);
 
     private static Stage      stage;
-    public         AnchorPane content;
+    @FXML
+    private        AnchorPane content;
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static Window getWindow() {
+        return stage;
     }
 
     @Override
@@ -32,7 +38,7 @@ public class MainWindow extends Application implements Initializable {
 
         try {
             stage.setTitle(Lang.get("Window.MainTitle"));
-            stage.setScene(new Scene(new FXMLLoader(MainWindow.class.getResource("MainWindow.fxml"), Lang.getBundle()).load()));
+            stage.setScene(new FXMLLoader(MainWindow.class.getResource("MainWindow.fxml"), Lang.getBundle()).load());
         } catch (RuntimeException | IOException e) {
             LOGGER.error("Konnte Scene nicht laden", e);
         }

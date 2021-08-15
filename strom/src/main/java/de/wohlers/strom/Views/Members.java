@@ -6,6 +6,7 @@ import de.wohlers.strom.Models.Member;
 import javafx.collections.ListChangeListener;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -14,13 +15,20 @@ import javafx.scene.control.TableView;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public class Members implements Initializable {
 
-    public Button                      editButton;
-    public Button                      deleteButton;
-    public TableView<Member>           memberTable;
-    public TableColumn<Member, String> nameColumn;
+    private final Logger logger = Logger.getLogger(Members.class.getName());
+
+    @FXML
+    private Button                      editButton;
+    @FXML
+    private Button                      deleteButton;
+    @FXML
+    private TableView<Member>           memberTable;
+    @FXML
+    private TableColumn<Member, String> nameColumn;
 
     private final MemberDAO memberDAO = MemberDAO.getInstance();
 
@@ -35,7 +43,7 @@ public class Members implements Initializable {
     }
 
     public void showDeleteMemberDialog() {
-        DeleteDialog.open(memberTable.getSelectionModel().getSelectedItem(), this::deleteMember, Lang.get("Dialog.Title.Delete"));
+        DeleteDialog.open(memberTable.getSelectionModel().getSelectedItem(), this::deleteMember, Lang.get("Dialog.Member.Delete"));
     }
 
     @Override
@@ -61,6 +69,7 @@ public class Members implements Initializable {
             memberTable.getItems().setAll(service.getValue());
             memberTable.getItems().addListener(this::persistChange);
         });
+        service.setOnFailed(e -> logger.severe("load data has failed" + service.getException().toString()));
         service.start();
     }
 
@@ -80,7 +89,6 @@ public class Members implements Initializable {
 
     private void updateMember(Member member) {
         memberDAO.merge(member);
-        // TODO - Muss ich ein Event feuern, damit die Tabelle aktualisiert wird?
     }
 
     private void deleteMember(Member member) {

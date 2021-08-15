@@ -4,32 +4,23 @@ import javafx.beans.property.*;
 
 import javax.persistence.*;
 
+@SuppressWarnings ("UnsupportedTypeWithoutConverterInspection")
 @Entity
-@Access (AccessType.FIELD)
+@Access (AccessType.PROPERTY)
 public class Member {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private       Long                               id;
-    @Transient
     private final StringProperty                     title                       = new SimpleStringProperty();
-    @Transient
     private final StringProperty                     name                        = new SimpleStringProperty();
-    @Transient
     private final StringProperty                     street                      = new SimpleStringProperty();
-    @Transient
     private final StringProperty                     zip                         = new SimpleStringProperty();
-    @Transient
     private final StringProperty                     city                        = new SimpleStringProperty();
-    @Transient
     private final StringProperty                     phone                       = new SimpleStringProperty();
-    @Transient
     private final StringProperty                     email                       = new SimpleStringProperty();
-    @Transient
     private final StringProperty                     epost                       = new SimpleStringProperty();
-    @Transient
     private final BooleanProperty                    directDebit                 = new SimpleBooleanProperty();
-    @Transient
     private final ObjectProperty<NotificationMethod> preferredNotificationMethod = new SimpleObjectProperty<>();
 
     /*

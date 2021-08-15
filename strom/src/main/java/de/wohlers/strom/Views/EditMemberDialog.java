@@ -2,13 +2,14 @@ package de.wohlers.strom.Views;
 
 import de.wohlers.strom.DAO.MemberDAO;
 import de.wohlers.strom.Lang.Lang;
+import de.wohlers.strom.MainWindow;
 import de.wohlers.strom.Models.Member;
-import javafx.event.ActionEvent;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.slf4j.LoggerFactory;
@@ -19,63 +20,72 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 public class EditMemberDialog implements Initializable {
-    public  Button           deleteButton;
-    public  Button           saveButton;
-    private Member           member;
-    private Consumer<Member> onSave;
-    private Stage            stage;
+    private final SimpleObjectProperty<Member> member = new SimpleObjectProperty<>();
+    @FXML
+    private       Stage                        stage;
+    @FXML
+    private       Button                       deleteButton;
+    @FXML
+    private       Button                       saveButton;
+    @FXML
+    private       TextField                    nameField;
+    private       Consumer<Member>             onSave;
 
     public static void open(Member member, Consumer<Member> onSave) {
         try {
-            FXMLLoader       loader     = new FXMLLoader(EditMemberDialog.class.getResource("EditMemberDialog.fxml"));
-            Parent           parent     = loader.load();
+            FXMLLoader loader = new FXMLLoader(EditMemberDialog.class.getResource("EditMemberDialog.fxml"), Lang.getBundle());
+            loader.load();
             EditMemberDialog controller = loader.getController();
             controller.setMember(member);
             controller.setOnSave(onSave);
-
-            Scene scene = new Scene(parent);
-            controller.stage = new Stage();
-            controller.stage.setTitle(Lang.get("Dialog.Title.Edit", member.getName()));
-            controller.stage.initModality(Modality.APPLICATION_MODAL);
-            controller.stage.setScene(scene);
-            controller.stage.show();
         } catch (IOException e) {
             LoggerFactory.getLogger(EditMemberDialog.class).error("Konnte Dialog nicht öffnen", e);
         }
     }
 
     private void setMember(Member member) {
-        this.member = member;
+        this.member.set(member);
     }
 
     private void setOnSave(Consumer<Member> consumer) {
         this.onSave = consumer;
     }
 
-    public void onDelete(ActionEvent actionEvent) {
-        DeleteDialog.open(member, MemberDAO.getInstance()::remove, Lang.get("Dialog.Title.Delete"));
-        // TODO - Löscht das auch aus der TableView?
-        MemberDAO.getInstance().remove(member);
+    public void onDelete() {
+        DeleteDialog.open(member.get(), MemberDAO.getInstance()::remove, Lang.get("Dialog.Member.Delete"));
         stage.close();
     }
 
-    public void onCancel(ActionEvent actionEvent) {
-        // TODO - alten Zustand aus der Datenbank abrufen
+    public void onCancel() {
         stage.close();
     }
 
-    public void onSave(ActionEvent actionEvent) {
-        // TODO - Vorher Werte aus der UI in dem Member ablegen
-        onSave.accept(member);
+    public void onSave() {
+        onSave.accept(member.get());
         stage.close();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (member.getId() == 0) {
-            deleteButton.setDisable(true);
-            saveButton.setText(Lang.get("Button.Generic.Create"));
-        }
+        member.addListener((observable, oldValue, newValue) -> {
+            if (newValue == null || newValue.getId() == null) {
+                deleteButton.setDisable(true);
+                saveButton.setText(Lang.get("Generic.Button.Create"));
+            } else {
+                deleteButton.setDisable(false);
+                saveButton.setText(Lang.get("Generic.Button.Save"));
+            }
+            if (newValue != null) {
+                nameField.textProperty().set(newValue.getName());
+                newValue.nameProperty().bindBidirectional(nameField.textProperty());
+            }
+        });
+        stage.initOwner(MainWindow.getWindow());
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
 
+    public void focusSave() {
+        saveButton.requestFocus();
     }
 }

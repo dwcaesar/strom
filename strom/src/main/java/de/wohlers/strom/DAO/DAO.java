@@ -18,7 +18,7 @@ public abstract class DAO<T> {
     }
 
     private static EntityManagerFactory getFactory() {
-        if (emf == null) { /* TODO - Speicherort der Datenbank soll im gleichen Verzeichnis sein, wie die jar selbst liegt. */
+        if (emf == null) {
             emf = Persistence.createEntityManagerFactory("objectdb:$objectdb/db/strom.odb");
         }
         return emf;
