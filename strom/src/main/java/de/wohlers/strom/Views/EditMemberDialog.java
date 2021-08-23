@@ -3,12 +3,15 @@ package de.wohlers.strom.Views;
 import de.wohlers.strom.DAO.MemberDAO;
 import de.wohlers.strom.Lang.Lang;
 import de.wohlers.strom.MainWindow;
+import de.wohlers.strom.Models.DebitType;
 import de.wohlers.strom.Models.Member;
+import de.wohlers.strom.Models.NotificationMethod;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -20,16 +23,34 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 public class EditMemberDialog implements Initializable {
-    private final SimpleObjectProperty<Member> member = new SimpleObjectProperty<>();
+    private final SimpleObjectProperty<Member>  member = new SimpleObjectProperty<>();
     @FXML
-    private       Stage                        stage;
+    private       Stage                         stage;
     @FXML
-    private       Button                       deleteButton;
+    private       Button                        deleteButton;
     @FXML
-    private       Button                       saveButton;
+    private       Button                        saveButton;
     @FXML
-    private       TextField                    nameField;
-    private       Consumer<Member>             onSave;
+    private       TextField                     titleField;
+    @FXML
+    private       TextField                     nameField;
+    @FXML
+    private       TextField                     streetField;
+    @FXML
+    private       TextField                     zipField;
+    @FXML
+    private       TextField                     cityField;
+    @FXML
+    private       TextField                     phoneField;
+    @FXML
+    private       TextField                     emailField;
+    @FXML
+    private       TextField                     epostField;
+    @FXML
+    private       ChoiceBox<DebitType>          directDebitField;
+    @FXML
+    private       ChoiceBox<NotificationMethod> preferredNotificationMethodField;
+    private       Consumer<Member>              onSave;
 
     public static void open(Member member, Consumer<Member> onSave) {
         try {
@@ -67,6 +88,9 @@ public class EditMemberDialog implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        directDebitField.getItems().setAll(DebitType.values());
+        preferredNotificationMethodField.getItems().setAll(NotificationMethod.values());
+
         member.addListener((observable, oldValue, newValue) -> {
             if (newValue == null || newValue.getId() == null) {
                 deleteButton.setDisable(true);
@@ -76,8 +100,26 @@ public class EditMemberDialog implements Initializable {
                 saveButton.setText(Lang.get("Generic.Button.Save"));
             }
             if (newValue != null) {
+                titleField.textProperty().set(newValue.getTitle());
+                newValue.titleProperty().bindBidirectional(titleField.textProperty());
                 nameField.textProperty().set(newValue.getName());
                 newValue.nameProperty().bindBidirectional(nameField.textProperty());
+                streetField.textProperty().set(newValue.getStreet());
+                newValue.streetProperty().bindBidirectional(streetField.textProperty());
+                zipField.textProperty().set(newValue.getZip());
+                newValue.zipProperty().bindBidirectional(zipField.textProperty());
+                cityField.textProperty().set(newValue.getCity());
+                newValue.cityProperty().bindBidirectional(cityField.textProperty());
+                phoneField.textProperty().set(newValue.getPhone());
+                newValue.phoneProperty().bindBidirectional(phoneField.textProperty());
+                emailField.textProperty().set(newValue.getEmail());
+                newValue.emailProperty().bindBidirectional(emailField.textProperty());
+                epostField.textProperty().set(newValue.getEpost());
+                newValue.epostProperty().bindBidirectional(epostField.textProperty());
+                directDebitField.getSelectionModel().select(DebitType.getValue(newValue.isDirectDebit())); // TODO - Werte werden nicht gespeichert / ausgelesen
+                directDebitField.selectionModelProperty().addListener((o, oV, nV) -> newValue.setDirectDebit(nV.getSelectedItem().isValue()));
+                preferredNotificationMethodField.getSelectionModel().select(newValue.getPreferredNotificationMethod()); // TODO - Werte werden nicht gespeichert / ausgelesen
+                preferredNotificationMethodField.selectionModelProperty().addListener((o, oV, nV) -> newValue.setPreferredNotificationMethod(nV.getSelectedItem()));
             }
         });
         stage.initOwner(MainWindow.getWindow());
