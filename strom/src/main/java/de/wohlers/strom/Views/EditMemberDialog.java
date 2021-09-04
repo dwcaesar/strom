@@ -1,11 +1,13 @@
 package de.wohlers.strom.Views;
 
 import de.wohlers.strom.DAO.MemberDAO;
+import de.wohlers.strom.Inputs.NonEmptyTextField;
 import de.wohlers.strom.Lang.Lang;
 import de.wohlers.strom.MainWindow;
 import de.wohlers.strom.Models.DebitType;
 import de.wohlers.strom.Models.Member;
 import de.wohlers.strom.Models.NotificationMethod;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,15 +35,15 @@ public class EditMemberDialog implements Initializable {
     @FXML
     private       TextField                     titleField;
     @FXML
-    private       TextField                     nameField;
+    private       NonEmptyTextField             nameField;
     @FXML
-    private       TextField                     streetField;
+    private       NonEmptyTextField             streetField;
     @FXML
-    private       TextField                     zipField;
+    private       NonEmptyTextField             zipField;
     @FXML
-    private       TextField                     cityField;
+    private       NonEmptyTextField             cityField;
     @FXML
-    private       TextField                     phoneField;
+    private       NonEmptyTextField             phoneField;
     @FXML
     private       TextField                     emailField;
     @FXML
@@ -116,15 +118,53 @@ public class EditMemberDialog implements Initializable {
                 newValue.emailProperty().bindBidirectional(emailField.textProperty());
                 epostField.textProperty().set(newValue.getEpost());
                 newValue.epostProperty().bindBidirectional(epostField.textProperty());
-                directDebitField.getSelectionModel().select(DebitType.getValue(newValue.isDirectDebit())); // TODO - Werte werden nicht gespeichert / ausgelesen
-                directDebitField.selectionModelProperty().addListener((o, oV, nV) -> newValue.setDirectDebit(nV.getSelectedItem().isValue()));
-                preferredNotificationMethodField.getSelectionModel().select(newValue.getPreferredNotificationMethod()); // TODO - Werte werden nicht gespeichert / ausgelesen
-                preferredNotificationMethodField.selectionModelProperty().addListener((o, oV, nV) -> newValue.setPreferredNotificationMethod(nV.getSelectedItem()));
+                directDebitField.getSelectionModel().select(DebitType.getValue(newValue.isDirectDebit()));
+                directDebitField.getSelectionModel().selectedItemProperty().addListener((o, oV, nV) -> newValue.setDirectDebit(nV.isValue()));
+                preferredNotificationMethodField.getSelectionModel().select(newValue.getPreferredNotificationMethod());
+                preferredNotificationMethodField.getSelectionModel().selectedItemProperty().addListener((o, oV, nV) -> newValue.setPreferredNotificationMethod(nV));
+
+                emailField.textProperty().addListener(this::validEmailRequired);
+                epostField.textProperty().addListener(this::validEmailRequired);
+                preferredNotificationMethodField.getSelectionModel().selectedItemProperty().addListener(this::validEmailRequired);
+                validEmailRequired(null, null, null);
             }
         });
+
+
         stage.initOwner(MainWindow.getWindow());
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+    }
+
+    private void validEmailRequired(Observable o, Object oV, Object nV) {
+        emailField.getStyleClass().remove("invalid");
+        emailField.promptTextProperty().setValue(null);
+        epostField.getStyleClass().remove("invalid");
+        epostField.promptTextProperty().setValue(null);
+        String email = emailField.textProperty().getValue();
+        String epost = epostField.textProperty().getValue();
+        switch (preferredNotificationMethodField.getSelectionModel().getSelectedItem()) {
+            case EMAIL:
+                if (email == null || email.isBlank() || email.isEmpty()) {
+                    emailField.getStyleClass().add("invalid");
+                    emailField.promptTextProperty().setValue(Lang.get("Generic.RequiredField"));
+                    emailField.textProperty().setValue("");
+                }
+                break;
+            case EPOST:
+                if (epost == null || epost.isBlank() || epost.isEmpty()) {
+                    epostField.getStyleClass().add("invalid");
+                    epostField.promptTextProperty().setValue(Lang.get("Generic.RequiredField"));
+                    epostField.textProperty().setValue("");
+                }
+                break;
+        }
+        if (email != null && !email.isEmpty() && !email.matches("^[^\\s@]+@\\w+\\.\\w+$")) {
+            emailField.getStyleClass().add("invalid");
+        }
+        if (epost != null && !epost.isEmpty() && !epost.matches("^[^\\s@]+@\\w+\\.\\w+$")) {
+            epostField.getStyleClass().add("invalid");
+        }
     }
 
     public void focusSave() {

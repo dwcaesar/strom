@@ -1,0 +1,5 @@
+.invalid {
+    -fx-background-color: pink;
+    -fx-border-color: red;
+    -fx-prompt-text-fill: black;
+}
