@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.*?>
+<SplitPane dividerPositions="0.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="de.wohlers.strom.Views.Places">
+    <ToolBar orientation="VERTICAL">
+        <Button mnemonicParsing="false" onAction="#showNewPlaceDialog" text="%Generic.Button.New">
+            <graphic>
+                <FontAwesomeIconView glyphName="PLUS"/>
+            </graphic>
+        </Button>
+        <Button fx:id="editButton" disable="true" mnemonicParsing="false" onAction="#showEditPlaceDialog" text="%Generic.Button.Edit">
+            <graphic>
+                <FontAwesomeIconView glyphName="PENCIL"/>
+            </graphic>
+        </Button>
+        <Separator/>
+        <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#showDeletePlaceDialog" text="%Generic.Button.Delete">
+            <graphic>
+                <FontAwesomeIconView glyphName="TRASH"/>
+            </graphic>
+        </Button>
+    </ToolBar>
+    <TableView fx:id="placeTable">
+        <placeholder>
+            <Label text="%Place.EmptyList"/>
+        </placeholder>
+        <columns>
+            <TableColumn fx:id="nameColumn" prefWidth="75.0" text="%Place.Name"/>
+        </columns>
+    </TableView>
+</SplitPane>

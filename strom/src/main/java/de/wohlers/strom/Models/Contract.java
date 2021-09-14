@@ -1,7 +1,6 @@
 package de.wohlers.strom.Models;
 
 import de.wohlers.strom.Entities.Bill;
-import de.wohlers.strom.Entities.Place;
 
 import javax.persistence.*;
 import java.util.Date;

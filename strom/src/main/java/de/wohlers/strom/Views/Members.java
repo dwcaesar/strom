@@ -34,12 +34,12 @@ public class Members implements Initializable {
 
     public void showNewMemberDialog() {
         Member member = new Member();
-        EditMemberDialog.open(member, this::addMember);
+        EditMemberDialog.open(member, this::addMember, this::deleteMember);
     }
 
     public void showEditMemberDialog() {
         Member member = memberTable.getSelectionModel().getSelectedItem();
-        EditMemberDialog.open(member, this::updateMember);
+        EditMemberDialog.open(member, this::updateMember, this::deleteMember);
     }
 
     public void showDeleteMemberDialog() {
@@ -73,7 +73,7 @@ public class Members implements Initializable {
         service.start();
     }
 
-    private void onSelectionChange(ListChangeListener.Change<? extends Member> change) {
+    private void onSelectionChange(ListChangeListener.Change<? extends Member> c) {
         if (memberTable.getSelectionModel().isEmpty()) {
             editButton.setDisable(true);
             deleteButton.setDisable(true);

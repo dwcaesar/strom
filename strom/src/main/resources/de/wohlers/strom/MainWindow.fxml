@@ -11,6 +11,7 @@
             <ToolBar BorderPane.alignment="CENTER">
                 <Button mnemonicParsing="false" onAction="#showHome" text="%Window.Button.Home"/>
                 <Button mnemonicParsing="false" onAction="#showMembers" text="%Window.Button.Members"/>
+                <Button mnemonicParsing="false" onAction="#showPlaces" text="%Window.Button.Places"/>
                 <Button mnemonicParsing="false" onAction="#showSettings" text="%Window.Button.Settings"/>
             </ToolBar>
         </top>

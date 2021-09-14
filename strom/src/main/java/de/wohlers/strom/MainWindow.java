@@ -78,4 +78,7 @@ public class MainWindow extends Application implements Initializable {
         showHome();
     }
 
+    public void showPlaces() {
+        show("Views/Places.fxml");
+    }
 }

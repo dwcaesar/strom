@@ -1,6 +1,5 @@
 package de.wohlers.strom.Views;
 
-import de.wohlers.strom.DAO.MemberDAO;
 import de.wohlers.strom.Inputs.NonEmptyTextField;
 import de.wohlers.strom.Lang.Lang;
 import de.wohlers.strom.MainWindow;
@@ -53,14 +52,16 @@ public class EditMemberDialog implements Initializable {
     @FXML
     private       ChoiceBox<NotificationMethod> preferredNotificationMethodField;
     private       Consumer<Member>              onSave;
+    private       Consumer<Member>              onDelete;
 
-    public static void open(Member member, Consumer<Member> onSave) {
+    public static void open(Member member, Consumer<Member> onSave, Consumer<Member> onDelete) {
         try {
             FXMLLoader loader = new FXMLLoader(EditMemberDialog.class.getResource("EditMemberDialog.fxml"), Lang.getBundle());
             loader.load();
             EditMemberDialog controller = loader.getController();
             controller.setMember(member);
             controller.setOnSave(onSave);
+            controller.setOnDelete(onDelete);
         } catch (IOException e) {
             LoggerFactory.getLogger(EditMemberDialog.class).error("Konnte Dialog nicht öffnen", e);
         }
@@ -75,8 +76,10 @@ public class EditMemberDialog implements Initializable {
     }
 
     public void onDelete() {
-        DeleteDialog.open(member.get(), MemberDAO.getInstance()::remove, Lang.get("Dialog.Member.Delete"));
-        stage.close();
+        DeleteDialog.open(member.get(), m -> {
+            onDelete.accept(m);
+            stage.close();
+        }, Lang.get("Dialog.Member.Delete"));
     }
 
     public void onCancel() {
@@ -169,5 +172,9 @@ public class EditMemberDialog implements Initializable {
 
     public void focusSave() {
         saveButton.requestFocus();
+    }
+
+    public void setOnDelete(Consumer<Member> onDelete) {
+        this.onDelete = onDelete;
     }
 }
