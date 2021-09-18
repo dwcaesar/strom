@@ -1,11 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
+<?import de.wohlers.strom.Inputs.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.wohlers.strom.Views.Settings">
-   <children>
-      <Label layoutX="282.0" layoutY="192.0" text="Settings" />
-   </children>
-</AnchorPane>
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.wohlers.strom.Views.Settings">
+    <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="100"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="100"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+        <Label text="%Club.Name"/>
+        <NonEmptyTextField fx:id="nameField" GridPane.columnIndex="1"/>
+        <Label text="%Club.Street" GridPane.rowIndex="1"/>
+        <NonEmptyTextField fx:id="streetField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label text="%Club.Zip" GridPane.rowIndex="2"/>
+        <NonEmptyTextField fx:id="zipField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <Label text="%Club.City" GridPane.rowIndex="3"/>
+        <NonEmptyTextField fx:id="cityField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        <Label text="%Club.BasicFeeRate" GridPane.rowIndex="4"/>
+        <Spinner fx:id="basicFeeField" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+        <Label text="%Club.ConnectFee" GridPane.rowIndex="5"/>
+        <Spinner fx:id="connectFeeField" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+        <Label text="%Club.PowerRate" GridPane.rowIndex="6"/>
+        <Spinner fx:id="powerRateField" editable="true"  GridPane.columnIndex="1" GridPane.rowIndex="6" />
+        <Label text="%Club.Contact" GridPane.rowIndex="7"/>
+        <NonEmptyChoiceBox fx:id="contactField" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+        <Label text="%Club.Treasurer" GridPane.rowIndex="8"/>
+        <NonEmptyChoiceBox fx:id="treasurerField" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+        <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+        </padding>
+    </GridPane>
+</ScrollPane>

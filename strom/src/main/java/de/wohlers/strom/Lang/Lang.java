@@ -3,6 +3,7 @@ package de.wohlers.strom.Lang;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -40,5 +41,9 @@ public class Lang {
             selectedBundle = ResourceBundle.getBundle("lang", getLang());
         }
         return selectedBundle;
+    }
+
+    public static NumberFormat getCurrencyFormat() {
+        return NumberFormat.getCurrencyInstance(getLang());
     }
 }

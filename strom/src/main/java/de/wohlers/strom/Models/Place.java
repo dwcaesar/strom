@@ -6,7 +6,7 @@ import javafx.beans.property.StringProperty;
 import javax.persistence.*;
 
 @SuppressWarnings ("UnsupportedTypeWithoutConverterInspection")
-@javax.persistence.Entity
+@javax.persistence.Entity(name = "Place")
 @Access (AccessType.PROPERTY)
 public class Place {
     @Id

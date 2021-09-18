@@ -5,7 +5,7 @@ import javafx.beans.property.*;
 import javax.persistence.*;
 
 @SuppressWarnings ("UnsupportedTypeWithoutConverterInspection")
-@Entity
+@Entity (name = "Member")
 @Access (AccessType.PROPERTY)
 public class Member {
 

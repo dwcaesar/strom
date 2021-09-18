@@ -69,7 +69,7 @@ public class Members implements Initializable {
             memberTable.getItems().setAll(service.getValue());
             memberTable.getItems().addListener(this::persistChange);
         });
-        service.setOnFailed(e -> logger.severe("load data has failed" + service.getException().toString()));
+        service.setOnFailed(e -> logger.severe("load data has failed " + service.getException().toString()));
         service.start();
     }
 
