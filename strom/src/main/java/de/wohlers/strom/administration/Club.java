@@ -23,4 +23,11 @@ public class Club {
      */
     private Member finance;
 
+    /**
+     * @return current Club information
+     */
+    public static Club get() {
+        return null; // TODO
+    }
+
 }

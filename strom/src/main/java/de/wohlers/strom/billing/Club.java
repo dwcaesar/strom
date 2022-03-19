@@ -1,6 +1,5 @@
 package de.wohlers.strom.billing;
 
-import de.wohlers.strom.contracts.Member;
 import lombok.Getter;
 
 @Getter
@@ -21,4 +20,15 @@ public class Club {
      */
     private Member finance;
 
+    public static Club fromClub(de.wohlers.strom.administration.Club club) {
+        Club out = new Club();
+        out.name = club.getName();
+        out.street = club.getStreet();
+        out.streetNumber = club.getStreetNumber();
+        out.postalCode = club.getPostalCode();
+        out.city = club.getCity();
+        out.responsible = Member.fromMember(club.getResponsible());
+        out.finance = Member.fromMember(club.getFinance());
+        return out;
+    }
 }
